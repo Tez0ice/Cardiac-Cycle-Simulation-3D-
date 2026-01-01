@@ -1,231 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cardiac Cycle Journey - Story Mode</title>
     <script type="text/javascript" src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
 </head>
+
 <body>
-
-<!-- Server Required Notice -->
-<div class="server-notice" id="server-notice">
-    <div class="server-box">
-        <h1>⚠️ Local Server Required</h1>
-        <p>Sketchfab API requires running from a web server.</p>
-        <p>Quick start with Python:</p>
-        <div class="code-block">python -m http.server 8000</div>
-        <p>Then open: <code>http://localhost:8000</code></p>
+    <div class="server-notice" id="server-notice">
+        <div class="server-box">
+            <h1>⚠️ Local Server Required</h1>
+            <p>Sketchfab API requires running from a web server.</p>
+            <p>Quick start with Python:</p>
+            <div class="code-block">python -m http.server 8000</div>
+            <p>Then open: <code>http://localhost:8000</code></p>
+        </div>
     </div>
-</div>
-
-<!-- Start Overlay -->
-<div class="start-overlay" id="start-overlay">
-    <div class="start-icon">🫀</div>
-    <h1 class="start-title">Cardiac Cycle Journey</h1>
-    <p class="start-subtitle"><strong>You are a red blood cell.</strong> Depleted of oxygen, you must navigate through the heart to reach the lungs and survive. Time is running out...</p>
-    <button class="start-btn" id="start-btn">Begin Journey</button>
-</div>
-
-<!-- Navigation -->
-<nav class="nav-container">
-    <div class="nav-tabs">
-        <button class="nav-tab active" data-page="quiz">🎮 Story</button>
-        <button class="nav-tab" data-page="leaderboard">🏆 Leaderboard</button>
-        <button class="nav-tab" data-page="discovery">🔍 Explore</button>
+    <div class="start-overlay" id="start-overlay">
+        <div class="start-icon">🫀</div>
+        <h1 class="start-title">Cardiac Cycle Journey</h1>
+        <p class="start-subtitle"><strong>You are a red blood cell.</strong> Depleted of oxygen, you must navigate
+            through the heart to reach the lungs and survive. Time is running out...</p>
+        <button class="start-btn" id="start-btn">Begin Journey</button>
     </div>
-</nav>
-
-<!-- Main Content -->
-<main class="main-content">
-
-    <!-- Quiz Page -->
-    <div class="page active" id="page-quiz">
-        <div class="quiz-page">
-            <div class="viewer-panel">
-                <div class="loading-overlay" id="loading">
-                    <div class="loader"></div>
-                    <p class="loading-text">Loading 3D Heart Model...</p>
-                </div>
-                <div class="vignette-overlay" id="vignette"></div>
-                <iframe id="api-frame" 
-                        allow="autoplay; fullscreen; xr-spatial-tracking"
-                        allowfullscreen
-                        mozallowfullscreen="true"
-                        webkitallowfullscreen="true">
-                </iframe>
-            </div>
-
-            <div class="story-panel">
-                <!-- Oxygen Vital Signs -->
-                <div class="vital-signs" id="vital-signs">
-                    <div class="vital-header">
-                        <div class="vital-label">
-                            <span>🩸</span> OXYGEN SATURATION
+    <nav class="nav-container">
+        <div class="nav-tabs">
+            <button class="nav-tab active" data-page="quiz">🎮 Story</button>
+            <button class="nav-tab" data-page="leaderboard">🏆 Leaderboard</button>
+            <button class="nav-tab" data-page="discovery">🔍 Explore</button>
+        </div>
+    </nav>
+    <main class="main-content">
+        <div class="page active" id="page-quiz">
+            <div class="quiz-page">
+                <div class="viewer-panel">
+                    <div class="loading-overlay" id="loading">
+                        <div class="loader"></div>
+                        <p class="loading-text">Loading 3D Heart Model...</p>
+                    </div>
+                    <div class="ready-overlay" id="ready-overlay">
+                        <div class="ready-box">
+                            <div class="ready-icon">🫀</div>
+                            <h2 class="ready-title">Model Loaded!</h2>
+                            <p class="ready-subtitle">Explore the heart model freely, or start your journey when ready.
+                            </p>
+                            <button class="ready-btn" id="start-quiz-btn">🚀 Start Quiz</button>
+                            <p class="ready-hint">💡 Tip: Check the Explore tab to study the heart anatomy first!</p>
                         </div>
-                        <div class="vital-percent" id="oxygen-percent">100%</div>
                     </div>
-                    <div class="oxygen-bar-container">
-                        <div class="oxygen-fill" id="oxygen-fill" style="width: 100%;"></div>
-                    </div>
-                    <div class="status-text" id="status-text">Stable — Find your path through the heart</div>
+                    <div class="vignette-overlay" id="vignette"></div>
+                    <iframe id="api-frame" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen
+                        mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
                 </div>
-
-                <!-- Progress -->
-                <div class="progress-container">
-                    <div class="progress-label">
-                        <span>Journey Progress</span>
-                        <span id="progress-text">0 / 6</span>
+                <div class="story-panel">
+                    <div class="vital-signs" id="vital-signs">
+                        <div class="vital-header">
+                            <div class="vital-label"><span>🩸</span> OXYGEN SATURATION</div>
+                            <div class="vital-percent" id="oxygen-percent">100%</div>
+                        </div>
+                        <div class="oxygen-bar-container">
+                            <div class="oxygen-fill" id="oxygen-fill" style="width: 100%;"></div>
+                        </div>
+                        <div class="status-text" id="status-text">Stable — Find your path through the heart</div>
                     </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+                    <div class="progress-container">
+                        <div class="progress-label">
+                            <span>Journey Progress</span>
+                            <span id="progress-text">0 / 6</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+                        </div>
                     </div>
-                </div>
-
-                <!-- Story Content -->
-                <div class="story-phase" id="story-phase">Chapter 1</div>
-                <h2 class="story-title" id="story-title"></h2>
-                <p class="story-narrative" id="story-narrative"></p>
-                <div class="story-instruction" id="story-instruction">
-                    Find the <span class="target" id="target-name">target</span> to continue
-                </div>
-
-                <!-- Action Buttons -->
-                <div class="action-buttons">
-                    <button class="action-btn hint" id="hint-btn">💡 Hint (-50 pts)</button>
-                    <button class="action-btn skip" id="skip-btn">⏭ Skip (-100 pts)</button>
-                </div>
-
-                <!-- Feedback -->
-                <div class="feedback-box" id="feedback">
-                    <span class="feedback-icon"></span>
-                    <span class="feedback-text">Click an annotation on the 3D heart</span>
-                </div>
-
-                <!-- Stats -->
-                <div class="stats-row">
-                    <div class="stat-item">
-                        <div class="stat-label">Score</div>
-                        <div class="stat-value score" id="score">0</div>
+                    <div class="story-phase" id="story-phase">Chapter 1</div>
+                    <h2 class="story-title" id="story-title"></h2>
+                    <p class="story-narrative" id="story-narrative"></p>
+                    <div class="story-instruction" id="story-instruction">
+                        Find the <span class="target" id="target-name">target</span> to continue
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-label">Time</div>
-                        <div class="stat-value time" id="timer">0:00</div>
+                    <div class="action-buttons">
+                        <button class="action-btn hint" id="hint-btn">💡 Hint (-50 pts)</button>
+                        <button class="action-btn skip" id="skip-btn">⏭ Skip (-100 pts)</button>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-label">Streak</div>
-                        <div class="stat-value streak" id="streak">0🔥</div>
+                    <div class="feedback-box" id="feedback">
+                        <span class="feedback-icon"></span>
+                        <span class="feedback-text">Click an annotation on the 3D heart</span>
+                    </div>
+                    <div class="stats-row">
+                        <div class="stat-item">
+                            <div class="stat-label">Score</div>
+                            <div class="stat-value score" id="score">0</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Time</div>
+                            <div class="stat-value time" id="timer">0:00</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Streak</div>
+                            <div class="stat-value streak" id="streak">0🔥</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- Leaderboard Page -->
-    <div class="page" id="page-leaderboard">
-        <div class="leaderboard-page">
-            <div class="leaderboard-header">
-                <h1>🏆 Leaderboard</h1>
-                <p style="color: var(--text-muted);">Top survivors of the Cardiac Journey</p>
-            </div>
-
-            <div class="podium">
-                <div class="podium-place">
-                    <div class="podium-avatar">🥈</div>
-                    <div class="podium-name" id="p2-name">---</div>
-                    <div class="podium-score" id="p2-score">-</div>
-                    <div class="podium-stand">2</div>
+        <div class="page" id="page-leaderboard">
+            <div class="leaderboard-page">
+                <div class="leaderboard-header">
+                    <h1>🏆 Leaderboard</h1>
+                    <p style="color: var(--text-muted);">Top survivors of the Cardiac Journey</p>
                 </div>
-                <div class="podium-place">
-                    <div class="podium-avatar">👑</div>
-                    <div class="podium-name" id="p1-name">---</div>
-                    <div class="podium-score" id="p1-score">-</div>
-                    <div class="podium-stand">1</div>
+                <div class="podium">
+                    <div class="podium-place">
+                        <div class="podium-avatar">🥈</div>
+                        <div class="podium-name" id="p2-name">---</div>
+                        <div class="podium-score" id="p2-score">-</div>
+                        <div class="podium-stand">2</div>
+                    </div>
+                    <div class="podium-place">
+                        <div class="podium-avatar">👑</div>
+                        <div class="podium-name" id="p1-name">---</div>
+                        <div class="podium-score" id="p1-score">-</div>
+                        <div class="podium-stand">1</div>
+                    </div>
+                    <div class="podium-place">
+                        <div class="podium-avatar">🥉</div>
+                        <div class="podium-name" id="p3-name">---</div>
+                        <div class="podium-score" id="p3-score">-</div>
+                        <div class="podium-stand">3</div>
+                    </div>
                 </div>
-                <div class="podium-place">
-                    <div class="podium-avatar">🥉</div>
-                    <div class="podium-name" id="p3-name">---</div>
-                    <div class="podium-score" id="p3-score">-</div>
-                    <div class="podium-stand">3</div>
-                </div>
-            </div>
-
-            <div class="leaderboard-table" id="leaderboard-table"></div>
-
-            <div class="score-entry" id="score-entry">
-                <h3>🎉 Submit Your Score</h3>
-                <div class="name-input-row">
-                    <input type="text" class="name-input" id="player-name" placeholder="Enter your name..." maxlength="20">
-                    <button class="submit-btn" id="submit-btn">Submit</button>
+                <div class="leaderboard-table" id="leaderboard-table"></div>
+                <div class="score-entry" id="score-entry">
+                    <h3>🎉 Submit Your Score</h3>
+                    <div class="name-input-row">
+                        <input type="text" class="name-input" id="player-name" placeholder="Enter your name..."
+                            maxlength="20">
+                        <button class="submit-btn" id="submit-btn">Submit</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- Discovery Page -->
-    <div class="page" id="page-discovery">
-        <div class="discovery-page">
-            <div class="viewer-panel">
-                <iframe id="discovery-frame"
-                        allow="autoplay; fullscreen; xr-spatial-tracking"
-                        allowfullscreen
-                        mozallowfullscreen="true"
-                        webkitallowfullscreen="true"
-                        style="width: 100%; height: 100%; border: none;">
-                </iframe>
-            </div>
-            <div class="discovery-panel">
-                <h2>🔍 Explore The Heart</h2>
-                <p>Learn the heart's anatomy before your journey. Click any annotation below to fly to that structure.</p>
-                
-                <div class="annotation-list" id="annotation-list">
-                    <p style="color: var(--text-muted); text-align: center; padding: 20px;">
-                        Loading annotations...
-                    </p>
+        <div class="page" id="page-discovery">
+            <div class="discovery-page">
+                <div class="viewer-panel">
+                    <iframe id="discovery-frame" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen
+                        mozallowfullscreen="true" webkitallowfullscreen="true"
+                        style="width: 100%; height: 100%; border: none;"></iframe>
+                </div>
+                <div class="discovery-panel">
+                    <h2>🔍 Explore The Heart</h2>
+                    <p>Learn the heart's anatomy before your journey. Click any annotation below to fly to that
+                        structure.</p>
+                    <div class="annotation-list" id="annotation-list">
+                        <p style="color: var(--text-muted); text-align: center; padding: 20px;">Loading annotations...
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
+    </main>
+    <div class="gameover-overlay" id="gameover-overlay">
+        <div class="gameover-icon">💀</div>
+        <h1 class="gameover-title">Oxygen Depleted</h1>
+        <p class="gameover-subtitle">Your blood cell couldn't find the path in time. The journey ends here... but you
+            can try again.</p>
+        <button class="gameover-btn" id="retry-btn">Try Again</button>
     </div>
-
-</main>
-
-<!-- Game Over Overlay -->
-<div class="gameover-overlay" id="gameover-overlay">
-    <div class="gameover-icon">💀</div>
-    <h1 class="gameover-title">Oxygen Depleted</h1>
-    <p class="gameover-subtitle">Your blood cell couldn't find the path in time. The journey ends here... but you can try again.</p>
-    <button class="gameover-btn" id="retry-btn">Try Again</button>
-</div>
-
-<!-- Completion Overlay -->
-<div class="completion-overlay" id="completion-overlay">
-    <div class="completion-icon">🎉</div>
-    <h1 class="completion-title">Journey Complete!</h1>
-    <p class="completion-subtitle">You survived the cardiac cycle and delivered oxygen to the body!</p>
+    <div class="completion-overlay" id="completion-overlay">
+        <div class="completion-icon">🎉</div>
+        <h1 class="completion-title">Journey Complete!</h1>
+        <p class="completion-subtitle">You survived the cardiac cycle and delivered oxygen to the body!</p>
+        <div class="completion-stats">
+            <div>
+                <span class="completion-stat-value" id="final-score" style="color: var(--success)">0</span>
+                <span class="completion-stat-label">Points</span>
+            </div>
+            <div>
+                <span class="completion-stat-value" id="final-time" style="color: var(--accent-purple)">0:00</span>
+                <span class="completion-stat-label">Time</span>
+            </div>
+            <div>
+                <span class="completion-stat-value" id="final-oxygen" style="color: var(--accent-oxygen)">0%</span>
+                <span class="completion-stat-label">Oxygen Left</span>
+            </div>
+        </div>
+        <div class="completion-actions">
+            <button class="completion-btn primary" id="save-btn">Save Score</button>
+            <button class="completion-btn secondary" id="replay-btn">Play Again</button>
+        </div>
+    </div>
+    <button class="audio-toggle" id="audio-toggle">🔊</button>
     
-    <div class="completion-stats">
-        <div>
-            <span class="completion-stat-value" id="final-score" style="color: var(--success)">0</span>
-            <span class="completion-stat-label">Points</span>
-        </div>
-        <div>
-            <span class="completion-stat-value" id="final-time" style="color: var(--accent-purple)">0:00</span>
-            <span class="completion-stat-label">Time</span>
-        </div>
-        <div>
-            <span class="completion-stat-value" id="final-oxygen" style="color: var(--accent-oxygen)">0%</span>
-            <span class="completion-stat-label">Oxygen Left</span>
-        </div>
-    </div>
-
-    <div class="completion-actions">
-        <button class="completion-btn primary" id="save-btn">Save Score</button>
-        <button class="completion-btn secondary" id="replay-btn">Play Again</button>
-    </div>
-</div>
-
-<!-- Audio Toggle -->
-<button class="audio-toggle" id="audio-toggle">🔊</button>
-<script src="./script.js"></script>
+</body>
+    <script type="text/javascript" src="./script.js"></script>
+</html>
